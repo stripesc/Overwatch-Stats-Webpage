@@ -79,11 +79,19 @@ function setPlayer(){
 
 function getHeroData(hero){
 	currHero = hero
-	console.log(json)
 	console.log(hero)
 	var heroData =json["competitiveStats"]["careerStats"][hero]
-	console.log(heroData)
-	jsonDiv.innerHTML += currHero + "<br>| Average for 10 Minutes <br>"
+	var gamesWon = json["competitiveStats"]["careerStats"][hero]["game"]["gamesWon"]
+	var gamesLost = json["competitiveStats"]["careerStats"][hero]["game"]["gamesLost"]
+	console.log(gamesWon + ":" + gamesLost)
+	var winPercent = (gamesWon / (gamesLost + gamesWon) * 100).toFixed(2) + "% (" + gamesWon + ":" + gamesLost + ")"
+	jsonDiv.innerHTML += currHero + "<br>"
+	console.log(winPercent)
+	if (gamesWon == 0 && gamesLost == 0){
+		winPercent = "No games finished"
+	}
+	jsonDiv.innerHTML += "| Win Rate : " + winPercent
+	jsonDiv.innerHTML += "<br>| Average for 10 Minutes <br>"
 	avgStats.forEach(getAverages)
 }
 

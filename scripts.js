@@ -17,10 +17,13 @@ function onload(){
 function searchHero(){
 	try {
 		jsonDiv.innerHTML = ""
-		getHeroData(document.getElementById("hero").value)
+		currHero = document.getElementById("hero").value;
+		console.log(currHero)
+		getHeroData(currHero)
 	}
 	catch(error){
-		jsonDiv.innerHTML = "invalid hero"
+		jsonDiv.innerHTML = "Hero not played in current competitive season"
+		console.log(error)
 	}
 }
 
@@ -96,7 +99,14 @@ function getHeroData(hero){
 }
 
 function getAverages(item, index){
-	jsonDiv.innerHTML += "| - " + avgStatsTitles[index] + " : " + json["competitiveStats"]["careerStats"][currHero]["average"][item] + "<br>"
+	var value
+	if(typeof json["competitiveStats"]["careerStats"][currHero]["average"][item] == "undefined"){
+		value = "No Data";
+	}
+	else {
+		value = json["competitiveStats"]["careerStats"][currHero]["average"][item];
+	}
+	jsonDiv.innerHTML += "| - " + avgStatsTitles[index] + " : " + value + "<br>"
 }
 
 
